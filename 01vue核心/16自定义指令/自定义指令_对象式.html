@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2>初始化:{{n}}</h2>
+        <h2>放大10倍值为: <span v-big="n"></span></h2>
+        <button @click="n++">点击n++</button>
+        <hr>
+        <input type="text" v-fbind:value="n">
+    </div>
+  
+</body>
+    <script>
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                n:1
+            },
+            directives:{
+                big(element,binding){
+                    element.innerText = binding.value * 10;
+                },
+                fbind:{
+                    // 指令与元素成功绑定(一上来)
+                    bind(element,binding){
+                        element.value = binding.value
+                    },
+                    // 指令所在元素被插入页面时
+                    inserted(element,binding){
+                        element.focus()
+                    },
+                    // 指令所在模板被重新解析时
+                    update(element,binding){
+                        element.value = binding.value
+                    }
+                }
+            }
+        })
+    </script>
+</html>
+
+<!-- 总结自定义指令:
+        1. 命名若是多个名字组成,之间要用 '-' 分隔':
+        2. 指令中this指向, 在指令中,this指向window都是操作DOM元素,通过模板来传参
+        3. 全局指令和过滤器一样,通过VUE来命名 -->
+
+        <!-- 1. 定义语法:
+                    @1. 全局指令:
+                            Vue.directive(指令名,配置对象) 或 Vue.directive(指令名,回调函数)
+                    @2. 局部指令:
+                            new Vue({                                   new Vue({
+                                directives:{指令名,配置对象}  或者              directives{指令名,回调函数}
+                            })                                                  )}
+                        
+            2.  配置对象中三个回调
+                    指令与元素成功绑定(一上来)
+                    bind(){}
+                    指令所在元素被插入页面时
+                    inserted(){}
+                    指令所在模板被重新解析时
+                    update(){}
+                -->  

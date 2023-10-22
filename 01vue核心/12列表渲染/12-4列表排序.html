@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2>人员列表</h2>
+        <input type="text" placeholder="请输入姓名:" v-model="keyWord">
+        <button @click="sortType = 2">年龄升序</button>
+        <button @click="sortType = 1">年龄降序</button>
+        <button @click="sortType = 0">原顺序</button>
+        <ul>
+            <li v-for="p in filePersons" :key="p.id">
+                {{p.name}} - {{p.age}} - {{p.sex}}
+            </li>
+        </ul>
+    </div>
+</body>
+    <script>
+        // computed实现
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                keyWord:'',
+                persons:[
+                    {id:'001',name:'ll',age:18,sex:'g'},
+                    {id:'002',name:'yy',age:21,sex:'b'},
+                    {id:'003',name:'ly',age:20,sex:'g'}
+                ],
+                sortType:0,
+            },
+            computed:{
+                filePersons(){
+                    // filter函数返回一个迭代器，其中包含使得函数返回True的可迭代对象中的元素
+                    const arr =  this.persons.filter((p) => {
+                        // indexOf函数是一个字符串方法，在给定的字符串中查找一个特定的子字符串，返回该子字符串第一次出现的位置索引。如果该子字符串不存在，则返回-1
+                        return p.name.indexOf(this.keyWord) !== -1//返回为true时,其值会返回给filter函数成为一个新数组
+                    });
+                    if(this.sortType){
+                        arr.sort((p1,p2) => {
+                            return this.sortType === 1 ? p2.age - p1.age : p1.age - p2.age
+                        })
+                    }
+                    return arr
+                }
+            }
+        })
+    </script>
+</html>

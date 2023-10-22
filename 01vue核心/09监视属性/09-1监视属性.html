@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- 是vm里面的属性就可以直接调用,但是若是window里面的就不能直接调用 -->
+        <h2>计算机学院{{info}}</h2>
+        <button @click="exchange">切换</button>
+    </div>
+</body>
+    <script>
+        const vm = new Vue({
+            el:'#root',
+            // 数据
+            data:{
+                change:true
+            },
+            // 计算属性
+            computed:{
+                info(){
+                    return this.change ? '计算机科学与技术' : '软件工程'
+                }
+            },
+            // 方法
+            methods:{
+                exchange(){
+                    this.change = !this.change;
+                }
+            }
+        })
+    </script>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <student></student>
+    </div>
+</body>
+    <script>
+        Vue.prototype.x = 1
+        // 定义组件
+        const student = Vue.extend({
+            template:`
+            <div>
+                <h2>学生姓名:{{name}}</h2>
+                <h2>地址:{{address}}</h2>
+                <button @click = 'show'>点击</button>
+            </div>
+            `,
+            data(){
+                return {
+                    name:'ly',
+                    address:'四川'
+                }
+            },
+            methods: {
+                show() {
+                    console.log(this.x);
+                },
+            },
+        })
+        const vm = new Vue({
+            el:'#app',
+           components:{
+            student
+           }
+        })
+    </script>
+</html>
+
+<!--  1. 内置关系: VueComponent.prototype.__proto__ === Vue.prototype
+      2. 为什么存在这个关系: 让组件实例对象(vc)可以访问到vue原型上的属性和方法-->

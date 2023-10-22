@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h1>{{msg}}</h1>
+       <school></school>
+    </div>
+</body>
+    <script>
+        const school = Vue.extend({
+            template:`
+            <div>
+                <h2>学校名称: {{schoolName}}</h2>
+                <h2>学校地址: {{address}}</h2>
+            </div>
+            `,
+            data(){
+                return {
+                    name:'scdx',
+                    address:'眉山'
+                }
+            }
+        })
+
+        new Vue({
+            el:'#root',
+            data:{
+                msg:'welcome!!!'
+            },
+            components:{
+                school:school
+            }
+        })
+    </script>
+</html>
+
+<!-- 组件名: 
+        1. 两个单词组成,若是多个单词组成组件名,则每个单词用 '-' 隔开,eg: my-school
+    
+        2. 可以使用name配置项指定组件在开发者工具中呈现的名字,
+        
+    组件标签: 也可以用<school/>,不用使用脚手架时,<school/>会导致后续组件不能渲染
+
+    debugger断点测试-->

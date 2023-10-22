@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+   <div id="app">
+
+    姓: <input type="text" v-model="firstName">
+    <br>
+    名: <input type="text" v-model="lastName">
+    <br>
+    姓名: <span>{{fullName}}</span>
+   </div>
+</body>
+    <script>
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                firstName: 'l',
+                lastName: 'y',
+            },
+            // 计算属性,是将已存在的属性 进行加工, 是属性,不是数据或者变量等.
+            computed:{
+                fullName:{
+                    // get有什么作用,当有人读取fullName,get就会被调用,且返回值就作为fullName的值
+
+                    // vue将若调用fullName时,this指向vm.
+
+                    // get什么时候调用,1. 初次读取fullName时, 2. 所依赖的数据发生变化时.  有缓存这样比methods有优势.
+                    get(){
+                        return this.firstName + '-' + this.lastName
+                    },
+                    // set什么时候调用, 当fullName被修改时
+
+                    set(value){
+                        const arr = value.split('-')
+                        this.firstName = arr[0];
+                        this.lastName = arr[1];
+                    }
+                }
+                // 若确定没有修改操作,我们可以简写
+                // fullName(){
+                    // return this.firstName + '-' + this.lastName
+                // }
+            }
+        })
+    </script>
+</html>
+
+<!-- 09-4和08-3是分别用计算属性(computed)和监视属性(watch)来写,区别分别为: -->
+<!-- 1. computed能完成的功能,watch都可以完成
+    2. watch能完成的功能,computed不一定能完成,例如:watch可以进行异步操作
+        @1. 所被vue管理的函数,最好写成普通函数,这样this指向才是vm 或 组件实例对象
+        @2. 所有不被vue管理的函数(定时器的回调函数, Ajax的回调函数等,promise的回调函数), 最好写成箭头函数,这样this指向的才是vm 或 组件实例对象 -->

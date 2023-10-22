@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2>姓名:{{name}}</h2>
+        <h2>地址:{{address}}</h2>
+        <hr>
+
+        <!-- 不会报错,student是存在属性 -->
+        <h2>学生姓名:{{student.name}}</h2>
+        <button @click="addSex">添加性别属性,默认为男</button>
+        <h2>性别:{{student.sex}}</h2>   
+        <h2>年龄: 真实年嫩{{student.age.rAge}} ,对外年龄{{student.age.sAge}}</h2>
+    </div>
+</body>
+    <script>
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                name:'ly',
+                address:'cd',
+                student:{
+                    name:'ll',
+                    age:{
+                        sAge:18,
+                        rAge:20
+                    }
+                }
+            },
+            methods: {
+                addSex() {
+                    // 是给响应式对象中添加一个属性,确保新属性同样是响应式的,且触发视图更新
+                    // 第一个参数是目标,第二个是属性名,第三个是属性值,this是指vm
+                    // 对象不能是vue实例(vm) 或者 vue实例的根数据对象(_data)
+                    Vue.set(this.student,'sex','男')
+                    //也可以这样添加this.$set(this.student,'sex','男')
+
+                    // 若是数组添加,在第二个参数就是写下标
+                },
+            },
+        })
+    </script>
+</html>

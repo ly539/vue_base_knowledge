@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h2>计算机学院{{info}}</h2>
+        <button @click="exchange">切换</button>
+    </div>
+</body>
+    <script>
+        const vm = new Vue({
+            el:'#root',
+            data:{
+                change:true
+            },
+            computed:{
+                info(){
+                    return this.change ? '计算机科学与技术' : '软件工程'
+                }
+            },
+            methods:{
+                exchange(){
+                    this.change = !this.change;
+                }
+            },
+            // 监视属性,里面的值为配置对象
+            // 监视属性必须存在才能被监视,当被监视属性变化时,回调函数自动调用
+            watch:{
+                change:{
+                    immediate:true,//初始化时让handler调用一下,默认为false
+                    // handler什么时候调用? 当change修改
+                    handler(newValue, oldValue){
+                    console.log(change被修改了);
+                    }
+                }
+            }
+        })
+
+        // 监视属性也可以
+        // vm.$watch('change',  immediate:true,//初始化时让handler调用一下,默认为false
+                    // handler什么时候调用? 当change修改
+                    // handler(newValue, oldValue){
+                    // console.log(change被修改了);
+                    // })
+    </script>
+</html>

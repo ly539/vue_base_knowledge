@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h2>计算机学院{{info}}</h2>
+        <button @click="exchange">切换</button>
+        <hr>
+        <h3>a的值是:{{numbers.a}}</h3>
+        <button @click="numbers.a++">点击让a++</button>
+    </div>
+</body>
+    <script>
+        const vm = new Vue({
+            el:'#root',
+            data:{
+                change:true,
+                numbers:{
+                    a:1,
+                    b:2
+                }
+            },
+            computed:{
+                info(){
+                    return this.change ? '计算机科学与技术' : '软件工程'
+                }
+            },
+            methods:{
+                exchange(){
+                    this.change = !this.change;
+                }
+            },
+            watch:{
+                change:{
+                    immediate:true,
+                    handler(newValue, oldValue){
+                    console.log(change被修改了);
+                    }
+                },
+                // 简写,只是响应一级结构时,不能配置immediate和handler,函数change相当于handler
+                // change(newValue, oldValue){
+                //     console.log(change被修改了);
+                // }
+                // 监视多级结构中某个属性的变化
+                'numbers.a':{
+                    handler(){
+                        console.log('a发生变化了!!!');
+                    }
+                },
+                // 监视多级结构中所有属性的变化,深度检测
+                // 
+                numbers:{
+                    deep:true,//若没有这个,则检测的只是numbers这个整体,而不是里面的内容,里面内容改变,不会影响到numbers改变.
+                    handler(){
+                        console.log('numbers里面内容发生变化了!!!');
+                    }
+                }
+            }
+        })
+    </script>
+</html>

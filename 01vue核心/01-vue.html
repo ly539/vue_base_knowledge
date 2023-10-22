@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+
+    <!-- vue是一个构造函数,所以在使用的时候要new来实例化 -->
+    <div id="app">
+        <!-- {{ }}里面为js表达式,可以是三元表达式 -->
+        <h3>插值语法: 一般用于标签体里面内容</h3>
+        <h1>hello,{{name}}</h1>
+        <br>
+         <h3>指令语法 一般用于解析标签</h3>
+         <!-- v-bind 是单项绑定 -->
+        <a v-bind:href="url">百度</a>
+        <a :href="url">百度2</a>
+
+        <br>
+        单项数据绑定:<input type="text" v-bind:value="inp.name">
+        <br>
+        <!-- v-model 只能应用于表单类元素,输入类元素,要有value -->
+        双向数据绑定:<input type="text" v-model:value="inp.name">
+        
+    </div>
+
+    <script type="text/javascript">
+        // Vue.config.productionTip = false; //阻止vue启动时产生生产信息
+
+        // 创建Vue实例
+        const vm = new Vue({
+
+            // 还可以用vue.$mount('#root')来绑定
+            el:'#app',//el用于指定当前Vue实例为哪个容器服务,值通常为css选择器字符串
+
+            // 还可以用函数式来写,data:function(){return{name:'ly'}}, 组件必须写函数式!!!
+            data:{//data中用于存储数据,数据供el所指定的容器去使用
+                name:'ly',
+                url:'http://baidu.com',
+                inp:{
+                    name:'ly'
+                }
+            }
+        })
+    </script>
+
+</body>
+</html>
